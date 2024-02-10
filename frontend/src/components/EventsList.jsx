@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import classes from "./EventsList.module.css";
 
-function EventsList({ events }) {
+export default function EventsList({ events }) {
   return (
     <div className={classes.events}>
       <h1>All Events</h1>
@@ -21,5 +21,3 @@ function EventsList({ events }) {
     </div>
   );
 }
-
-export default EventsList;

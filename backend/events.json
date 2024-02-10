@@ -1,6 +1,13 @@
 {
   "events": [
     {
+      "title": "a party",
+      "image": "https://images.squarespace-cdn.com/content/v1/55c37beae4b0336075603f86/1443039469134-E9SLQBQ2OW1Y69KPKFDO/image-asset.jpeg?format=2500w",
+      "date": "2024-02-27",
+      "description": "another amazing event",
+      "id": "00740a9d-8775-4d19-af1f-767803ead3b0"
+    },
+    {
       "id": "e1",
       "title": "A dummy event",
       "date": "2023-02-22",

@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import classes from "./EventsNavigation.module.css";
 
-function EventsNavigation() {
+export default function EventsNavigation() {
   return (
     <header className={classes.header}>
       <nav>
@@ -32,5 +32,3 @@ function EventsNavigation() {
     </header>
   );
 }
-
-export default EventsNavigation;
