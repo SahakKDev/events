@@ -1,5 +1,6 @@
 import { Link, useSubmit } from "react-router-dom";
 import classes from "./EventItem.module.css";
+import { DELETE } from "../constants";
 
 export default function EventItem({ event }) {
   const submit = useSubmit();
@@ -10,7 +11,7 @@ export default function EventItem({ event }) {
     );
 
     if (yes) {
-      submit(null, { method: "DELETE" });
+      submit(null, { method: DELETE });
     }
   }
 

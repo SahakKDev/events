@@ -1,16 +1,37 @@
-import { json, redirect, useRouteLoaderData } from "react-router-dom";
+import {
+  Await,
+  defer,
+  json,
+  redirect,
+  useRouteLoaderData,
+} from "react-router-dom";
 import EventItem from "../components/EventItem";
+import EventsList from "../components/EventsList";
+import { loadEvents } from "../utils";
+import { Suspense } from "react";
+import { BASE_URL } from "../constants";
 
 export default function EventDetailPage() {
-  const { event } = useRouteLoaderData("event-details");
+  const { event, events } = useRouteLoaderData("event-details");
 
-  return <EventItem event={event} />;
+  return (
+    <>
+      <Suspense fallback={<p style={{ textAlign: "center" }}>Loading</p>}>
+        <Await resolve={event}>
+          {(loadedEvent) => <EventItem event={loadedEvent} />}
+        </Await>
+      </Suspense>
+      <Suspense fallback={<p style={{ textAlign: "center" }}>Loading</p>}>
+        <Await resolve={events}>
+          {(loadedEvents) => <EventsList events={loadedEvents} />}
+        </Await>
+      </Suspense>
+    </>
+  );
 }
 
-EventDetailPage.loader = async function loader({ params }) {
-  const { eventId } = params;
-
-  const response = await fetch(`http://localhost:8080/events/${eventId}`);
+async function loadEvent(eventId) {
+  const response = await fetch(`${BASE_URL}/events/${eventId}`);
 
   if (!response.ok) {
     throw json(
@@ -19,13 +40,23 @@ EventDetailPage.loader = async function loader({ params }) {
     );
   }
 
-  return response;
+  const data = await response.json();
+  return data.event;
+}
+
+EventDetailPage.loader = async function loader({ params }) {
+  const { eventId } = params;
+
+  return defer({
+    event: await loadEvent(eventId),
+    events: loadEvents(),
+  });
 };
 
 EventDetailPage.action = async function action({ params, request }) {
   const { eventId } = params;
 
-  const response = await fetch(`http://localhost:8080/events/${eventId}`, {
+  const response = await fetch(`${BASE_URL}/events/${eventId}`, {
     method: request.method,
   });
 

@@ -10,6 +10,8 @@ import NewEventPage from "./pages/NewEventPage";
 import RootPage from "./pages/RootPage";
 import EventsRootPage from "./pages/EventsRootPage";
 import ErrorPage from "./pages/ErrorPage";
+import EventForm from "./components/EventForm";
+import NewsletterPage from "./pages/NewsletterPage";
 
 const router = createBrowserRouter([
   {
@@ -37,15 +39,24 @@ const router = createBrowserRouter([
                 element: <EventDetailPage />,
                 action: EventDetailPage.action,
               },
-              { path: "edit", element: <EditEventPage /> },
+              {
+                path: "edit",
+                element: <EditEventPage />,
+                action: EventForm.action,
+              },
             ],
           },
           {
             path: "new",
             element: <NewEventPage />,
-            action: NewEventPage.action,
+            action: EventForm.action,
           },
         ],
+      },
+      {
+        path: "newsletter",
+        element: <NewsletterPage />,
+        action: NewsletterPage.action,
       },
     ],
   },
