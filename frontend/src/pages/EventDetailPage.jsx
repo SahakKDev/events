@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import EventItem from "../components/EventItem";
 import EventsList from "../components/EventsList";
-import { loadEvents } from "../utils";
+import { getAuthToken, loadEvents } from "../utils";
 import { Suspense } from "react";
 import { BASE_URL } from "../constants";
 
@@ -56,8 +56,12 @@ EventDetailPage.loader = async function loader({ params }) {
 EventDetailPage.action = async function action({ params, request }) {
   const { eventId } = params;
 
+  const token = getAuthToken();
   const response = await fetch(`${BASE_URL}/events/${eventId}`, {
     method: request.method,
+    headers: {
+      Authorization: "Bearer " + token,
+    },
   });
 
   if (!response.ok) {

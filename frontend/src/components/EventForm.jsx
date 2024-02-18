@@ -9,6 +9,7 @@ import {
 
 import classes from "./EventForm.module.css";
 import { BASE_URL, PATCH } from "../constants";
+import { getAuthToken } from "../utils";
 
 export default function EventForm({ method, event = {} }) {
   const { title, description, image, date } = event;
@@ -94,10 +95,12 @@ EventForm.action = async function action({ request, params }) {
     url += `/${params.eventId}`;
   }
 
+  const token = getAuthToken();
   const response = await fetch(url, {
     method,
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
     },
     body: JSON.stringify(Object.fromEntries(formData)),
   });
