@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import classes from "./EventForm.module.css";
+import { BASE_URL, PATCH } from "../constants";
 
 export default function EventForm({ method, event = {} }) {
   const { title, description, image, date } = event;
@@ -87,9 +88,9 @@ EventForm.action = async function action({ request, params }) {
   const formData = await request.formData();
   const method = request.method;
 
-  let url = "http://localhost:8080/events";
+  let url = `${BASE_URL}/events`;
 
-  if (method === "PATCH") {
+  if (method === PATCH) {
     url += `/${params.eventId}`;
   }
 
